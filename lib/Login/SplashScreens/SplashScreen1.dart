@@ -13,12 +13,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 50), () {
-      Get.offNamed(AppRoutes.home);
-    });
-  }
+  // void initState() {
+  //   super.initState();
+  //   Future.delayed(const Duration(seconds: 50), () {
+  //     Get.offNamed(AppRoutes.home);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +84,12 @@ class _SplashScreenState extends State<SplashScreen> {
                                 ),
                               ),
                               SizedBox(height: screenHeight * 0.03),
-                              Container(
-                                width: screenWidth * 0.1,
-                                height: 2,
-                                color: Colors.orange,
-                              ),
+
+                                  Container(
+                                    width: screenWidth * 0.1,
+                                    height: 2,
+                                    color: Colors.orange,
+                                  ),
                             ],
                           ),
                         ),
@@ -134,7 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                         child: InkWell(
                           onTap:   (){
-                            Get.offNamed(AppRoutes.home);
+                            Get.offNamed(AppRoutes.userLogin);
                           },
                           child: Center(
                             child: Icon(
