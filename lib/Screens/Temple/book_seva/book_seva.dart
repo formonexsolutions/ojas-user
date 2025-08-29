@@ -21,12 +21,12 @@ class BookSevaPage1 extends StatelessWidget{
     double iconTextSpacing = screenWidth * 0.02;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Book Seva",
-        screenWidth: Get.width,
-        showBack: true,
-        showActions: true,
-      ),
+        appBar: CustomAppBar(
+      title: "Priest List",
+      screenWidth: Get.width,
+      showBack: true,
+          showActions: true,
+    ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10),
         child: Column(

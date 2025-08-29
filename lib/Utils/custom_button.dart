@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -26,28 +27,28 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = Get.width;
-    final btncolor =Color(0xFFF2921B);
+    final btncolor = const Color(0xFFF2921B);
+
     return SizedBox(
       width: width,
-      height: screenWidth *0.15,
+      height: height,   // ✅ now uses the parameter, not hardcoded screenWidth * 0.15
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: btncolor,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: onPressed,   // ✅ this works fine
         child: Text(
           text,
-          style:  GoogleFonts.poppins(
-          fontSize: screenWidth * 0.055,
-          fontWeight: FontWeight.w700,
+          style: GoogleFonts.poppins(
+            fontSize: screenWidth * 0.055,
+            fontWeight: FontWeight.w700,
             color: textColor,
+          ),
         ),
       ),
-      )
     );
   }
 }

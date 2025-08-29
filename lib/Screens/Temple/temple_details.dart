@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../Utils/custom_appbar/custome_appbar.dart';
 
-class DetailPage extends StatelessWidget {
-
+class TempleDetailPage extends StatelessWidget {
+   final String disc;
   final String imageUrl;
   final String title;
-  final String disc;
 
-  const DetailPage({
+
+  const TempleDetailPage({
     super.key,
     required this.imageUrl,
     required this.title,
@@ -30,9 +30,8 @@ class DetailPage extends StatelessWidget {
     return DefaultTabController(length: 3,
         child:
       Scaffold(
-
         appBar: CustomAppBar(
-          title: "Temple",
+          title: "Priest List",
           screenWidth: Get.width,
           showBack: true,
           showActions: true,
@@ -128,7 +127,6 @@ class DetailPage extends StatelessWidget {
     );
   }
 }
-
 
 
 class _AboutTabContent extends StatelessWidget {

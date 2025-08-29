@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // The initial route is set to the splash screen.
-      initialRoute: FirebaseAuth.instance.currentUser == null ? '/' : '/home',
+    initialRoute: FirebaseAuth.instance.currentUser == null ? '/' : '/home',
       // GetX uses the routes defined in AppPages.
       getPages: AppPages.routes,
     );

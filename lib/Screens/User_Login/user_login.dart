@@ -15,13 +15,18 @@ class UserLoginPage extends StatelessWidget {
   final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
+    final screenWidth = Get.width;
 
-    final screenWidth=Get.width;
+    double iconSize = screenWidth * 0.15;
+    double fontSize = screenWidth * 0.035;
+    double spacing = screenWidth * 0.03;
+    double padding = screenWidth * 0.04;
+    double iconTextSpacing = screenWidth * 0.02;
     return Scaffold(
       body:
       SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(padding),
           child:
           Form(
             key: _formKey,
@@ -29,10 +34,10 @@ class UserLoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: screenWidth *0.2,),
+                SizedBox(height: screenWidth *0.05,),
                 Container(
                   alignment: Alignment.center,
-                  height: screenWidth * 0.5,
+                  height: screenWidth *0.35,
                   child: Image.asset("assets/login/login.jpg"),
                 ),
 
@@ -41,13 +46,13 @@ class UserLoginPage extends StatelessWidget {
                     'Login',
                     style: GoogleFonts.poppins(
                       textStyle: TextStyle(
-                          fontSize: 24,
+                          fontSize: screenWidth * 0.045,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
-                SizedBox(height: screenWidth *0.10,),
+                SizedBox(height: screenWidth *0.05,),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,13 +76,13 @@ class UserLoginPage extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: screenWidth *0.05,),
-                Text("Email Or Mobile"),
+                SizedBox(height: screenWidth *0.03,),
+                Text("Email"),
                 _buildField(
                     'example@gmail.com',
                     controller: _emailController,
                     validator: _validateEmail),
-                SizedBox(height: screenWidth *0.05,),
+                SizedBox(height: screenWidth *0.03,),
                 Text("Password"),
                 _buildPassword(
                   "Password",
@@ -93,6 +98,7 @@ class UserLoginPage extends StatelessWidget {
                     text: "Login",
                     //color: Colors.orange,
                     width: MediaQuery.of(context).size.width,
+                    height: screenWidth *0.10,
                     onPressed: ()=>authController.login(
                         _emailController.text.trim(),
                         _passwordController.text.trim()),
@@ -101,28 +107,28 @@ class UserLoginPage extends StatelessWidget {
 
                 }),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an account?",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontSize: screenWidth *0.04,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      ),),
-                    TextButton(
-                      onPressed: () => Get.toNamed('/register'),
-                      child: Text('Sign Up',
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don't have an account?",
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                              fontSize: screenWidth * 0.04,
-                              color: Color(0xFFF2921B),
+                              fontSize: screenWidth *0.035,
+                              color: Colors.black,
                               fontWeight: FontWeight.w500),
+                        ),),
+                      TextButton(
+                        onPressed: () => Get.toNamed('/register'),
+                        child: Text('Sign Up',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                color: Color(0xFFF2921B),
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
+                    ],
+                  ),
 
               ],
             ),

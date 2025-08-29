@@ -8,7 +8,7 @@ import 'package:get/get.dart';
       {
         'title': 'Pooja',
         'icon': 'https://cdn-icons-png.flaticon.com/128/3598/3598849.png',
-        'route': '/pooja',
+        'route': '/aarati',
       },
       {
         'title': 'Mantras',
@@ -18,17 +18,17 @@ import 'package:get/get.dart';
       {
         'title': 'Book Priest',
         'icon': 'https://cdn-icons-png.flaticon.com/128/8574/8574877.png',
-        'route': '/pandit-booking',
+        'route': '/pandit-list',
       },
       {
         'title': 'Book Seva',
         'icon': 'https://cdn-icons-png.flaticon.com/128/10913/10913319.png',
-        'route': '/bookSeva',
+        'route': '/bookseva1',
       },
       {
         'title': 'Donation',
         'icon': 'https://cdn-icons-png.flaticon.com/128/2522/2522998.png',
-        'route': '/panditDetails',
+        'route': '/donation',
       },
       {
         'title': 'Festivals',

@@ -19,8 +19,10 @@ class AuthController extends GetxController {
   final RxString error = ''.obs;
 
   Future<void> registerUser({
+    required String id,
     required String name,
     required String email,
+    required String mobile,
     required String password,
   }) async {
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
@@ -47,7 +49,7 @@ class AuthController extends GetxController {
       String uid = userCredential.user!.uid;
 
       await _firestore.collection('users').doc(uid).set({
-        'uid': uid,
+        'id': uid,
         'name': name,
         'email': email,
         'createdAt': FieldValue.serverTimestamp(),
@@ -55,6 +57,8 @@ class AuthController extends GetxController {
       // Save data locally
       box.write('email', email);
       box.write('name', name);
+      box.write("mobile", mobile);
+      box.write('id', id);
       Get.snackbar("Success", "Registration complete",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red.shade100,

@@ -8,6 +8,8 @@ import '../../models/Pooja_Model/pooja_model.dart';
 class PoojaController extends GetxController {
   var categories = ['all', 'Shiva', 'Krishna', 'Ganesha', 'Durga'].obs;
 
+
+
   var pooja = <Pooja>[
     Pooja(
       picture:

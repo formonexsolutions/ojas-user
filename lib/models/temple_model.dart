@@ -1,12 +1,8 @@
-import 'festival_model.dart';
+// lib/models/temple2.dart
+class Temple2 {
+  final String name;
+  final String imageUrl;
 
-class Temple {
-  final String title;
-  final String images;
-
-
-  Temple({
-    required this.title,
-    required this.images,
-  });
+  Temple2({required this.name, required this.imageUrl});
 }
+

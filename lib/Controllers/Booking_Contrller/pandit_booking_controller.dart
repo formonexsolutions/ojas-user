@@ -1,29 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../models/bookings/pandit_booking_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ojas_app/Screens/Testing/test1.dart';
 
+import '../../models/bookings/pandit_list_model.dart';
 
-class PanditBookingController extends GetxController {
-  // Form fields
-  var customerName = ''.obs;
-  var panditName = ''.obs;
-  var poojaType = ''.obs;
-  var date = DateTime.now().obs;
-  var address = ''.obs;
+class PanditController1 extends GetxController {
+  var panditList = <PanditModel1>[].obs;
+  var isLoading = true.obs;
+  var selectedPooja = "".obs; // initially nothing selected
 
-  // List of bookings
-  var bookings = <PanditBooking>[].obs;
+  @override
+  void onInit() {
+    fetchPandits();
+    super.onInit();
+  }
 
-  // Add booking
-  void bookPandit() {
-    final newBooking = PanditBooking(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      customerName: customerName.value,
-      panditName: panditName.value,
-      date: date.value,
-      poojaType: poojaType.value,
-      address: address.value,
-    );
-    bookings.add(newBooking);
-    Get.snackbar("Success", "Pandit booked successfully!");
+  void fetchPandits() async {
+    try {
+      isLoading(true);
+      final snapshot = await FirebaseFirestore.instance.collection('pandit').get();
+      if (snapshot.docs.isNotEmpty) {
+        panditList.value =
+            snapshot.docs.map((doc) => PanditModel1.fromJson(doc.data(), doc.id)).toList();
+      } else {
+        // dummy data
+        Text("No Data available");
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }

@@ -23,44 +23,6 @@ class PoojaView extends StatelessWidget {
       body: Column(
 
         children: [
-          // 🔹 Top App Bar
-          // Container(
-          //   height: 134.97,
-          //   decoration: BoxDecoration(
-          //     color: const Color.fromRGBO(242, 146, 27, 1),
-          //     borderRadius: const BorderRadius.only(
-          //       bottomLeft: Radius.circular(18),
-          //       bottomRight: Radius.circular(18),
-          //     ),
-          //   ),
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
-          //     child: Row(
-          //       children: [
-          //         SvgPicture.asset(
-          //           'assets/Vector.svg',
-          //           width: 30,
-          //           height: 20,
-          //           color: Colors.white,
-          //         ),
-          //         const SizedBox(width: 10),
-          //         Text(
-          //           'Pooja',
-          //           style: GoogleFonts.poppins(
-          //             fontSize: 20,
-          //             fontWeight: FontWeight.w500,
-          //             color: Colors.white,
-          //           ),
-          //         ),
-          //         const Spacer(),
-          //         const Icon(Icons.search, size: 25, color: Colors.white),
-          //         const SizedBox(width: 10),
-          //         const Icon(Icons.favorite_border_outlined,
-          //             size: 23, color: Colors.white),
-          //       ],
-          //     ),
-          //   ),
-          // ),
 
           const SizedBox(height: 15),
 

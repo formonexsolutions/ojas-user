@@ -13,8 +13,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     required this.screenWidth,
-    this.showBack = false,
-    this.showActions = true,
+   // this.showBack = true,
+    this.showActions = true, required this.showBack,
   });
 
   @override
@@ -23,15 +23,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: screenWidth * 0.2,
+      toolbarHeight: screenWidth * 0.7,
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          fontSize: screenWidth * 0.07,
+          fontSize: screenWidth * 0.06,
           fontWeight: FontWeight.w700,
           color: AppColors.appbar_titleColor,
         ),
       ),
+
       iconTheme: IconThemeData(
         color: Colors.white, // change drawer icon color
       ),

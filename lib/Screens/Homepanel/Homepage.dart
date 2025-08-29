@@ -8,12 +8,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../Controllers/Festival_Controller/festival_controller.dart';
 import '../../Controllers/HomepanelControllers/HomeController.dart';
+import '../../Controllers/TempleController/temple_card.dart';
+import '../../Controllers/TempleController/temple_controller.dart';
 import '../../Routes/AppRoutes.dart';
 import '../../Utils/app_colors.dart';
 import '../../Utils/custom_appbar/custome_appbar.dart';
 import '../../models/festival_model.dart';
 import '../Temple/temple_details.dart';
 import '../../models/temple_model.dart';
+import '../Testing/test1.dart';
+
 
 
 class CarouselController extends GetxController {
@@ -36,12 +40,14 @@ class Temple {
 
 
 class HomeView extends StatelessWidget {
-//  HomeView({Key? key}) : super(key: key);
+
 
   final HomeController controller = Get.find<HomeController>();
 
   final PageController _controller = PageController(viewportFraction: 0.8);
-  final FestivalController _fcontroller = Get.put(FestivalController());
+  final FestivalController _fcontroller = Get.find<FestivalController>();
+  final TempleController2 tcontroller = Get.put(TempleController2());
+
 
   // A list of background colors for the cards
   final List<Color> cardColors = [
@@ -70,7 +76,6 @@ class HomeView extends StatelessWidget {
       title: "Shree Mahadev Temple",
       images: 'assets/temples/temple3.jpg',
     )
-
   ];
 
   final List<Map<String, String>> items = const [
@@ -104,6 +109,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final screenWidth = Get.width;
     int crossAxisCount = 3;
     double iconSize = screenWidth * 0.15;
@@ -116,291 +122,409 @@ class HomeView extends StatelessWidget {
     final box = GetStorage();
     String? email = box.read('email');
     String? name = box.read('name');
+    String? mobile=box.read("mobile");
+    String? id=box.read("id");
     final User? user = FirebaseAuth.instance.currentUser;
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: "Ojas",
-        screenWidth: Get.width,
-       // showBack: true,
-        showActions: true,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-               // color: Colors.orange,
-                borderRadius: BorderRadius.circular(10),
+
+    final smcontroller = PageController(viewportFraction: 0.8, keepPage: true);
+    return
+      LayoutBuilder(
+          builder: (context, constraints) {
+            final screenWidth = constraints.maxWidth;
+            final screenHeight = constraints.maxHeight;
+            return Scaffold(
+              appBar: CustomAppBar(
+                title: "Ojas",
+                screenWidth: Get.width,
+                // showBack: true,
+                showActions: true,
+                showBack: false,
               ),
-                child: UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.orange
-                  ),
-                  currentAccountPicture: CircleAvatar(),
-                    currentAccountPictureSize:Size.square(50),
-                    accountName: name!=null? Text(name):Text("user"),
-                    accountEmail:   Text(email!),
-                )
-              ,),
+              drawer: Drawer(
+                child: ListView(
+                  children: [
+                    DrawerHeader(
+                      decoration: BoxDecoration(
+                        // color: Colors.orange,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: UserAccountsDrawerHeader(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.orange
+                        ),
+                        currentAccountPicture: CircleAvatar(),
+                        currentAccountPictureSize: Size.square(50),
+                        accountName: name != null ? Text(name) : Text("user"),
+                        accountEmail: Text(email!),
+                      )
+                      ,),
 
-            ListTile(
-              leading: Icon(Icons.calendar_month,color: Colors.orange,),
-              title: Text("Calender"),
-              onTap: () => Get.offAllNamed("/calender"),
-            ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.calendar_month, color: Colors.orange,),
+                      title: Text("Calender"),
+                      onTap: () => Get.offAllNamed("/calender"),
+                    ),
 
-            ListTile(
-                leading: Icon(Icons.calendar_month,color: Colors.orange,),
-                title: Text("Festivals"),
-              onTap: () {
-                // ✅ Pass the *model* itself as GetX argument
-                Get.toNamed(AppRoutes.festivalList);
-              },
-            )
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(padding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Temples',
-                style: TextStyle(
-                  fontSize: screenWidth * 0.055,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.appbar_bgColor
+                    ListTile(
+                      leading: Icon(
+                        Icons.festival_outlined, color: Colors.orange,),
+                      title: Text("Festivals"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.toNamed(AppRoutes.festivalList);
+                      },
+                    ),
+
+                    ListTile(
+                      leading: Icon(Icons.login, color: Colors.orange,),
+                      title: Text("Pandit Login"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.toNamed("/pandit-login");
+                      },
+                    ),
+                ListTile(
+                leading: Icon(Icons.history, color: Colors.orange,),
+                title: Text("User Booking History"),
+                   onTap: () {
+            // ✅ Pass the *model* itself as GetX argument
+                    Get.toNamed("/user-booking-history");
+                 },),
+
+                    ListTile(
+                      leading: Icon(Icons.login, color: Colors.orange,),
+                      title: Text("Pandit detailed"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.toNamed("/priest-detailed");
+                      },
+                    ),
+
+                    ListTile(
+                      leading: Icon(Icons.music_note, color: Colors.orange,),
+                      title: Text("PanditList"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/pandit-list");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.music_note, color: Colors.orange,),
+                      title: Text("Aarati"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/aarati");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.music_note, color: Colors.orange,),
+                      title: Text("Mantra"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/mantras");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.music_note, color: Colors.orange,),
+                      title: Text("Pooja"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/pooja");
+                      },
+                    ),
+
+
+                    ListTile(
+                      leading: Icon(Icons.book_online, color: Colors.orange,),
+                      title: Text("Book Seva"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/bookseva1");
+                      },
+                    ), ListTile(
+                      leading: Icon(Icons.group, color: Colors.orange,),
+                      title: Text("Donation"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        Get.offAllNamed("/donation");
+                      },
+                    ),
+
+
+                    ListTile(
+                      leading: Icon(Icons.person, color: Colors.orange,),
+                      title: Text("Profile"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        //Get.offAllNamed("/festival");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.settings, color: Colors.orange,),
+                      title: Text("Settings"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        //Get.offAllNamed("/festival");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.help, color: Colors.orange,),
+                      title: Text("Help"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        //Get.offAllNamed("/festival");
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.login_outlined, color: Colors.orange,),
+                      title: Text("Logout"),
+                      onTap: () {
+                        // ✅ Pass the *model* itself as GetX argument
+                        //Get.offAllNamed("/festival");
+                      },
+                    )
+
+
+                  ],
                 ),
               ),
-              SizedBox(height: spacing),
-              CarouselSlider.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index, realIdx) {
-                  final item = items[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Get.to(()=>DetailPage( imageUrl: item['url']!,
-                        title: item['title']!,
-                        disc: item["disc"]!,));
-                    },
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                              12,
-                            ),
-                            child:
-                            Container(
-                              width: screenWidth *0.75,
-                              alignment: Alignment.bottomLeft,
-                              height: screenWidth *0.06,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                    image: AssetImage(item["url"]!))
+              body: SingleChildScrollView(
+
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      SizedBox(height: spacing),
+
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Temples',
+                              style: TextStyle(
+                                  fontSize: screenWidth * 0.045,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.appbar_bgColor
                               ),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      bottom:20,
-                                      left: 10,
-                                      child: Text(
-                                        item['title']!,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                            ),
+                            const SizedBox(height: 10,),
+                            CarouselSlider.builder(
+                              itemCount: items.length,
+                              itemBuilder: (context, index, realIdx) {
+                                final item = items[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.to(()=>TempleDetailPage(
+                                      imageUrl: item['url']!,
+                                      title: item['title']!,
+                                      disc: item["disc"]!,));
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          child:
+                                          Container(
+                                            width: screenWidth *0.75,
+                                            alignment: Alignment.bottomLeft,
+                                            height: screenWidth *0.1,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: AssetImage(item["url"]!))
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  bottom:20,
+                                                  left: 10,
+                                                  child: Text(
+                                                    item['title']!,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              options: CarouselOptions(
+                                onPageChanged: c.pageChanged,
+                                height: screenWidth * 0.4,
+                                viewportFraction: 0.7,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 5),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Obx(() => Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(
+                                  carouselImages.length,
+                                      (index) => Container(
+                                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                                    height: 6,
+                                    width: c.currentIndex.value == index ? 30 : 12, // active vs inactive
+                                    decoration: BoxDecoration(
+                                      color: c.currentIndex.value == index
+                                          ? AppColors.appbar_bgColor // active color
+                                          : Colors.grey[500],             // inactive color
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )),
+                            // PageView of cards
+
+                          ],
+                        ),
+                      ),
+
+                      // 2. Main Service Grid Section
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Features',
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.045,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.appbar_bgColor
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.festivalList);
+                              },
+                              icon: Icon(Icons.arrow_forward_ios,
+                                size: screenWidth * 0.05,
+                                color: AppColors.appbar_bgColor,))
+                        ],
+                      ),
+
+                      // SizedBox(height: spacing),
+
+                      SizedBox(
+                        height: 100, // adjust height as per your card size
+                        child: GridView.builder(
+                          scrollDirection: Axis.horizontal, // 👈 makes it horizontal scroll
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1, // only 1 row visible at a time
+                            childAspectRatio:1, // adjust aspect ratio of card
+                            mainAxisSpacing: 5,
+                          ),
+                          itemCount: controller.homeItems.length > 3
+                              ? 6
+                              : controller.homeItems.length, // 👈 max 3 cards
+                          itemBuilder: (context, index) {
+                            final item = controller.homeItems[index];
+                            return GestureDetector(
+                              onTap: () => controller.onItemSelected(item['route']!),
+                              child: Card(
+                                color: cardColors[index % cardColors.length],
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      item['icon']!,
+                                      height: iconSize,
+                                      width: iconSize,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    SizedBox(height: iconTextSpacing),
+                                    Text(
+                                      item['title']!,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                   ],
                                 ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  onPageChanged: c.pageChanged,
-                  height: screenWidth * 0.4,
-                  viewportFraction: 0.7,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-              Obx(() => Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    carouselImages.length,
-                        (index) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      height: 6,
-                      width: c.currentIndex.value == index ? 30 : 12, // active vs inactive
-                      decoration: BoxDecoration(
-                        color: c.currentIndex.value == index
-                            ? AppColors.appbar_bgColor // active color
-                            : Colors.grey[500],             // inactive color
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
-                ),
-              )),
-
-            SizedBox(height: spacing * 0.5),
-
-              // 2. Main Service Grid Section
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Features',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.055,
-                          fontWeight: FontWeight.bold,
-                            color: AppColors.appbar_bgColor
-                        ),
-                      ),
-                      IconButton(
-                          onPressed: (){
-                            Get.toNamed(AppRoutes.festivalList);
+                              ),
+                            );
                           },
-                          icon: Icon(Icons.arrow_forward_ios,
-                            size: screenWidth *0.05,
-                            color: AppColors.appbar_bgColor,))
-                    ],
-                  ),
-
-             // SizedBox(height: spacing),
-
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  crossAxisSpacing: spacing,
-                  mainAxisSpacing: spacing,
-                  childAspectRatio: 1.0,
-                ),
-                itemCount: controller.homeItems.length,
-                itemBuilder: (context, index) {
-                  final item = controller.homeItems[index];
-                  return GestureDetector(
-                    onTap: () => controller.onItemSelected(item['route']!),
-                    child: Card(
-                      color: cardColors[index % cardColors.length],
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        SizedBox(height: 20,),
+                      // 3. "Shop Online" Banner Section
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.network(
-                            item['icon']!,
-                            height: iconSize,
-                            width: iconSize,
-                            fit: BoxFit.contain,
-                          ),
-                          SizedBox(height: iconTextSpacing),
                           Text(
-                            item['title']!,
-                            textAlign: TextAlign.center,
+                            'Temple Events & Festivals',
                             style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.045,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.appbar_bgColor
                             ),
                           ),
+
+                          IconButton(
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.festivalList);
+                              },
+                              icon: Icon(Icons.arrow_forward_ios,
+                                size: screenWidth * 0.05,
+                                color: AppColors.appbar_bgColor,))
                         ],
                       ),
-                    ),
-                  );
-                },
-              ),
-
-
-              // 3. "Shop Online" Banner Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Temple Events & Festivals',
-                    style: TextStyle(
-                        fontSize: screenWidth * 0.055,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.appbar_bgColor
-                    ),
-                  ),
-
-                  IconButton(
-                      onPressed: (){
-                    Get.toNamed(AppRoutes.festivalList);
-                  },
-                      icon: Icon(Icons.arrow_forward_ios,
-                        size: screenWidth *0.05,
-                        color: AppColors.appbar_bgColor,))
-                ],
-              ),
-             // SizedBox(height: spacing),
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.40,
-                child: PageView.builder(
-                  controller: _controller,
-                  itemCount: _fcontroller.festivals.length,
-                  onPageChanged: (index) {
-                    // optional: handle page index
-                  },
-                  itemBuilder: (context, index) {
-                    final festival = _fcontroller.festivals[index];
-                    final Festival f =_fcontroller.festivals[index] ;
-                    return GestureDetector(
-                      onTap: () {
-                        // Navigate to festival detail page
-                        Get.toNamed(AppRoutes.festivalDetails, arguments: f);
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            image: NetworkImage(festival.image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        alignment: Alignment.bottomCenter,
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          festival.name,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            backgroundColor: Colors.black45,
-                          ),
+                      // SizedBox(height: spacing),
+                      SizedBox(
+                        height: 250,
+                        child: PageView.builder(
+                          controller: _controller,
+                          itemCount: _fcontroller.festivals.length,
+                          itemBuilder: (context, index) {
+                            final f = _fcontroller.festivals[index];
+                            return FestivalCard(
+                              imageUrl: f.image,
+                              title: f.name,
+                              date: f.date,
+                              location: "Pune",
+                              onTap: () {
+                                Get.toNamed(AppRoutes.festivalDetails, arguments: f);
+                              },
+                            );
+                          },
                         ),
                       ),
-                    );
-                  },
+                      SizedBox(height: 50,),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 30,),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          });
   }
 }
